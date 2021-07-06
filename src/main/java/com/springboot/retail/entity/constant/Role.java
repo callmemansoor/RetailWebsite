@@ -5,13 +5,13 @@ public enum Role {
 	
 	BUYER(0) , EMPLOYEE(30) , AFFILIATE(10) ;
 	
-	private final double discount;
+	private final int discount;
 
-	private Role(double discount) {
+	private Role(int discount) {
 		this.discount = discount;
 	}
 
-	public double getDiscount() {
+	public int getDiscount() {
 		return discount;
 	}
 

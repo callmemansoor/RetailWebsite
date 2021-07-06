@@ -11,9 +11,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class OrderPlace {
+public class OrderRequest {
 
-	private Integer userId;
+	private int customerId;
 
 	private Order order;
 

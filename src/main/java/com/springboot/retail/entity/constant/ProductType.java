@@ -2,6 +2,6 @@ package com.springboot.retail.entity.constant;
 
 public enum ProductType {
 
-	GROCERY, ELECTRONIC, APPLIANCE, BEAUTY, FURNITURE;
+	GROCERY, FRUITS, VEGGIES ,ELECTRONIC, APPLIANCE, BEAUTY, FURNITURE;
 
 }

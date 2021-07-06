@@ -1,31 +1,33 @@
 package com.springboot.retail.controller;
 
-import java.sql.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.retail.entity.Customer;
-import com.springboot.retail.entity.constant.Role;
-import com.springboot.retail.repositoty.CustomerRepository;
+import com.springboot.retail.dto.OrderRequest;
+import com.springboot.retail.dto.OrderResponse;
+import com.springboot.retail.service.OrderPlaceService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/order")
 public class OrderPlaceController {
-	
+
 	@Autowired
-	private CustomerRepository customerRepo;
+	private OrderPlaceService orderPlaceService;
 
-	@GetMapping("/placeorder")
-	public ResponseEntity<String> handle() {
-		Customer c = new Customer(1, "Mansoor", new Date(2021, 06, 01) , Role.AFFILIATE);
-		customerRepo.save(c);
+	@PostMapping("/placeorder")
+	public ResponseEntity<String> placeOrder(@RequestBody OrderRequest orderRequest) {
 
-		return new ResponseEntity<String>("Order Placed", HttpStatus.CREATED);
+		OrderResponse orderResponse = orderPlaceService.placeOrder(orderRequest);
+
+		return new ResponseEntity<String>(
+				"Hi " + orderResponse.getCustomerName() + "Your Order Has Been SuccessFully Placed. "
+						+ "And Your Total Payable Amount Is :" + orderResponse.getTotalBill(),
+				HttpStatus.CREATED);
 	}
 
 }

@@ -1,8 +1,10 @@
 package com.springboot.retail.service;
 
-import org.springframework.stereotype.Service;
+import com.springboot.retail.dto.OrderRequest;
+import com.springboot.retail.dto.OrderResponse;
 
-@Service
-public class OrderPlaceService {
+public interface OrderPlaceService {
+
+	OrderResponse placeOrder(OrderRequest orderRequest);
 
 }
