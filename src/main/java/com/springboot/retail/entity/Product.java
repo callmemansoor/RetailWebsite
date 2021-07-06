@@ -25,16 +25,25 @@ import lombok.ToString;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
 	@Column
 	private String name;
 	
-	private Integer price;
+	private int price;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="product_type")
 	private ProductType productType;
+
+	public Product(String name, int price, ProductType productType) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.productType = productType;
+	}
+	
+	
 
 }

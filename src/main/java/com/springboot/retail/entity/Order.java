@@ -1,5 +1,6 @@
 package com.springboot.retail.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,20 +30,30 @@ public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private int id;
 
-	@Column(name="user_id")
-	private Integer userId;
-	
-	@OneToMany(fetch=FetchType.LAZY , cascade = CascadeType.ALL)
+	@Column(name = "order_date")
+	private LocalDate orderDate;
+
+	@Column(name = "order_price")
+	private double orderPrice;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id")
 	private List<Product> products;
-	
+
+	public Order(int id, double orderPrice, List<Product> products) {
+		super();
+		this.id = id;
+		this.orderPrice = orderPrice;
+		this.products = products;
+	}
+
 	public void addProduct(Product product) {
-		if(products ==null) {
+		if (products == null) {
 			products = new ArrayList<Product>();
 		}
-		
+
 		products.add(product);
 	}
 
