@@ -86,10 +86,11 @@ public class DiscountOrderPlaceServiceImplTest {
 
 		Customer customer = new Customer(1, "Mansoor", LocalDate.now().minusYears(3), Role.BUYER);
 		Mockito.when(customerRepository.getById(1)).thenReturn(customer);
-
 		OrderResponse orderResponse = discountOrderPlaceService.placeOrder(orderRequest);
-
+		
 		assertThat(460d).isEqualTo(orderResponse.getTotalBill());
+		assertThat(1).isEqualTo(orderResponse.getCustomerId());
+		assertThat("Mansoor").isEqualTo(orderResponse.getCustomerName());
 
 	}
 
