@@ -31,7 +31,7 @@ public class Product {
 	@Column
 	private String name;
 	
-	private int price;
+	private double price;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="product_type")

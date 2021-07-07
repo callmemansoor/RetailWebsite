@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiscountOrderPlaceServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-retail-website</a> &gt; <a href="index.source.html" class="el_package">com.springboot.retail.service</a> &gt; <span class="el_source">DiscountOrderPlaceServiceImpl.java</span></div><h1>DiscountOrderPlaceServiceImpl.java</h1><pre class="source lang-java linenums">package com.springboot.retail.service;
+
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.springboot.retail.dto.OrderRequest;
+import com.springboot.retail.dto.OrderResponse;
+import com.springboot.retail.entity.Customer;
+import com.springboot.retail.entity.Order;
+import com.springboot.retail.entity.Product;
+import com.springboot.retail.entity.constant.ProductType;
+import com.springboot.retail.repositoty.CustomerRepository;
+
+@Service
+<span class="fc" id="L17">public class DiscountOrderPlaceServiceImpl implements OrderPlaceService {</span>
+
+	private final static int fixedDiscountInDollars = 5;
+
+	private final static int twoYearDiscountInPercentage = 5;
+
+	@Autowired
+	private CustomerRepository customerRepo;
+
+	@Override
+	public OrderResponse placeOrder(OrderRequest orderRequest) {
+<span class="fc" id="L28">		Customer customer = customerRepo.getById(orderRequest.getCustomerId());</span>
+<span class="fc" id="L29">		Order order = getOrderWithDiscount(orderRequest, customer);</span>
+<span class="fc" id="L30">		customer.addOrder(order);</span>
+<span class="fc" id="L31">		customerRepo.save(customer);</span>
+<span class="fc" id="L32">		OrderResponse orderResponse = new OrderResponse(customer.getId(), customer.getName(), order.getOrderPrice());</span>
+<span class="fc" id="L33">		return orderResponse;</span>
+	}
+
+	protected Order getOrderWithDiscount(OrderRequest orderRequest, Customer customer) {
+<span class="fc" id="L37">		Order order = orderRequest.getOrder();</span>
+<span class="fc" id="L38">		order.setOrderDate(LocalDate.now());</span>
+
+<span class="fc" id="L40">		double totalBillAfterDiscount = 0;</span>
+<span class="fc" id="L41">		double billBeforeDollarDiscount = 0;</span>
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for (Product product : order.getProducts()) {</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">			if (!product.getProductType().equals(ProductType.GROCERY)) {</span>
+<span class="fc" id="L46">				int custDiscount = customer.getRole().getDiscount();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">				if (custDiscount != 0) {</span>
+<span class="fc" id="L48">					billBeforeDollarDiscount += calculatePercentageDiscount(product.getPrice(), custDiscount);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">				} else if (customer.getRegisteredDate().isBefore(order.getOrderDate().minusYears(2))) {</span>
+<span class="fc" id="L50">					billBeforeDollarDiscount += calculatePercentageDiscount(product.getPrice(),</span>
+							twoYearDiscountInPercentage);
+				}
+<span class="fc" id="L53">			} else {</span>
+<span class="fc" id="L54">				billBeforeDollarDiscount += product.getPrice();</span>
+			}
+<span class="fc" id="L56">		}</span>
+
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (billBeforeDollarDiscount &gt;= 100) {</span>
+<span class="fc" id="L59">			double discountMultiplier = Math.floor(billBeforeDollarDiscount / 100);</span>
+<span class="fc" id="L60">			totalBillAfterDiscount = billBeforeDollarDiscount - (fixedDiscountInDollars * discountMultiplier);</span>
+		}
+
+<span class="fc" id="L63">		order.setOrderPrice(totalBillAfterDiscount);</span>
+
+<span class="fc" id="L65">		return order;</span>
+	}
+
+	protected double calculatePercentageDiscount(int price, int discount) {
+
+<span class="fc" id="L70">		return (price) - (price * discount / 100);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

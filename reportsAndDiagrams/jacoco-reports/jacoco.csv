@@ -1,0 +1,13 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+spring-retail-website,com.springboot.retail,SpringRetailWebsiteApplication,5,3,0,0,2,1,1,1,1,1
+spring-retail-website,com.springboot.retail.dto,OrderRequest,92,26,16,0,1,5,12,6,4,6
+spring-retail-website,com.springboot.retail.dto,OrderResponse,141,15,18,0,5,2,19,2,10,2
+spring-retail-website,com.springboot.retail.entity,Product,147,58,26,0,1,12,17,11,4,11
+spring-retail-website,com.springboot.retail.entity,Customer,218,77,41,1,2,21,26,14,5,14
+spring-retail-website,com.springboot.retail.entity,Order,170,58,28,0,5,12,19,11,5,11
+spring-retail-website,com.springboot.retail.service,AccountCreationServiceImpl,0,12,0,0,0,3,0,2,0,2
+spring-retail-website,com.springboot.retail.service,DiscountOrderPlaceServiceImpl,0,130,2,8,0,27,2,7,0,4
+spring-retail-website,com.springboot.retail.entity.constant,Role,0,48,0,0,0,6,0,3,0,3
+spring-retail-website,com.springboot.retail.entity.constant,ProductType,0,74,0,0,0,2,0,1,0,1
+spring-retail-website,com.springboot.retail.controller,OrderPlaceController,24,3,0,0,4,1,1,1,1,1
+spring-retail-website,com.springboot.retail.controller,AccountCreationController,24,3,0,0,3,1,1,1,1,1

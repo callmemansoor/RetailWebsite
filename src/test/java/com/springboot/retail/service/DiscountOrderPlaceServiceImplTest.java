@@ -36,7 +36,7 @@ public class DiscountOrderPlaceServiceImplTest {
 	public void calculatePercentageDiscountTest() {
 		double expectedValue = 190;
 		double actualValue = discountOrderPlaceService.calculatePercentageDiscount(200, 5);
-		assertThat(expectedValue).isEqualTo(actualValue);
+		assertThat(actualValue).isEqualTo(expectedValue);
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class DiscountOrderPlaceServiceImplTest {
 		Customer customer = new Customer("Mansoor", Role.BUYER);
 		customer.setRegisteredDate(LocalDate.now().minusYears(3));
 		Order actualOrder = discountOrderPlaceService.getOrderWithDiscount(orderRequest, customer);
-		assertThat(460d).isEqualTo(actualOrder.getOrderPrice());
+		assertThat(actualOrder.getOrderPrice()).isEqualTo(460d);
 
 		Customer customer2 = new Customer("Manish", Role.EMPLOYEE);
 		customer.setRegisteredDate(LocalDate.now().minusYears(1));
@@ -65,7 +65,7 @@ public class DiscountOrderPlaceServiceImplTest {
 
 		Order actualOrder2 = discountOrderPlaceService.getOrderWithDiscount(orderRequest2, customer2);
 
-		assertThat(365d).isEqualTo(actualOrder2.getOrderPrice());
+		assertThat(actualOrder2.getOrderPrice()).isEqualTo(365d);
 
 	}
 
@@ -84,12 +84,12 @@ public class DiscountOrderPlaceServiceImplTest {
 
 		OrderRequest orderRequest = new OrderRequest(1, order);
 
-		Customer customer = new Customer(1, "Mansoor", LocalDate.now().minusYears(3), Role.BUYER);
+		Customer customer = new Customer(1, "Mansoor", LocalDate.now(), Role.BUYER);
 		Mockito.when(customerRepository.getById(1)).thenReturn(customer);
 		OrderResponse orderResponse = discountOrderPlaceService.placeOrder(orderRequest);
 		
-		assertThat(460d).isEqualTo(orderResponse.getTotalBill());
-		assertThat(1).isEqualTo(orderResponse.getCustomerId());
+		assertThat(orderResponse.getTotalBill()).isEqualTo(475d);
+		assertThat(orderResponse.getCustomerId()).isEqualTo(1);
 		assertThat("Mansoor").isEqualTo(orderResponse.getCustomerName());
 
 	}

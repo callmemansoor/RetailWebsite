@@ -49,6 +49,8 @@ public class DiscountOrderPlaceServiceImpl implements OrderPlaceService {
 				} else if (customer.getRegisteredDate().isBefore(order.getOrderDate().minusYears(2))) {
 					billBeforeDollarDiscount += calculatePercentageDiscount(product.getPrice(),
 							twoYearDiscountInPercentage);
+				} else {
+					billBeforeDollarDiscount += product.getPrice();
 				}
 			} else {
 				billBeforeDollarDiscount += product.getPrice();
@@ -65,7 +67,7 @@ public class DiscountOrderPlaceServiceImpl implements OrderPlaceService {
 		return order;
 	}
 
-	protected double calculatePercentageDiscount(int price, int discount) {
+	protected double calculatePercentageDiscount(double price, int discount) {
 
 		return (price) - (price * discount / 100);
 	}
