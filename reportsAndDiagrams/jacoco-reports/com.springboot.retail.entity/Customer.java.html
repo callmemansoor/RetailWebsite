@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Customer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-retail-website</a> &gt; <a href="index.source.html" class="el_package">com.springboot.retail.entity</a> &gt; <span class="el_source">Customer.java</span></div><h1>Customer.java</h1><pre class="source lang-java linenums">package com.springboot.retail.entity;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.springboot.retail.entity.constant.Role;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Entity
+@Table(name = &quot;customer&quot;)
+<span class="pc bnc" id="L29" title="All 40 branches missed.">@Data</span>
+<span class="nc" id="L30">@AllArgsConstructor</span>
+<span class="fc" id="L31">@NoArgsConstructor</span>
+<span class="nc" id="L32">@ToString</span>
+public class Customer {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="fc" id="L37">	private int id;</span>
+
+	@Column
+<span class="fc" id="L40">	private String name;</span>
+
+	@Column(name = &quot;reg_date&quot;)
+<span class="fc" id="L43">	private LocalDate registeredDate;</span>
+
+	@Enumerated(EnumType.STRING)
+	@Column
+<span class="fc" id="L47">	private Role role;</span>
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = &quot;customer_id&quot;)
+<span class="fc" id="L51">	private List&lt;Order&gt; orders;</span>
+
+	public Customer(Integer id, String name, LocalDate date, Role role) {
+<span class="fc" id="L54">		super();</span>
+<span class="fc" id="L55">		this.id = id;</span>
+<span class="fc" id="L56">		this.name = name;</span>
+<span class="fc" id="L57">		this.registeredDate = date;</span>
+<span class="fc" id="L58">		this.role = role;</span>
+<span class="fc" id="L59">	}</span>
+
+	public Customer(String name, Role role) {
+<span class="fc" id="L62">		super();</span>
+<span class="fc" id="L63">		this.name = name;</span>
+<span class="fc" id="L64">		this.role = role;</span>
+<span class="fc" id="L65">	}</span>
+
+	public void addOrder(Order order) {
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (orders == null) {</span>
+<span class="fc" id="L69">			orders = new ArrayList&lt;Order&gt;();</span>
+		}
+<span class="fc" id="L71">		orders.add(order);</span>
+<span class="fc" id="L72">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -67,7 +67,7 @@ public class DiscountOrderPlaceServiceImpl implements OrderPlaceService {
 		return order;
 	}
 
-	protected double calculatePercentageDiscount(int price, int discount) {
+	protected double calculatePercentageDiscount(double price, int discount) {
 
 		return (price) - (price * discount / 100);
 	}
